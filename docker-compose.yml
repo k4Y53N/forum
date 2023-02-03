@@ -1,0 +1,74 @@
+version: '3.4'
+
+services:
+  database:
+    image: postgres
+    environment:
+      POSTGRES_PASSWORD_FILE: /run/secrets/db_password
+      POSTGRES_USER: ${DB_USERNAME}
+      POSTGRES_DB: ${DB_NAME}
+    ports:
+      - "5432"
+    secrets:
+      - db_password
+      - db_username
+      - db_name
+    healthcheck:
+      test: [ "CMD-SHELL", "pg_isready -d $${POSTGRES_DB} -U $${POSTGRES_USER}"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+      start_period: 30s
+    volumes:
+      - db-data:/var/lib/postgresql/data
+  backend:
+    build: backend
+    environment:
+      PORT: ${PORT}
+      DB_HOSTNAME: ${DB_HOSTNAME}
+      DB_PORT: ${DB_PORT}
+      DB_NAME: ${DB_NAME}
+      DB_USERNAME: ${DB_USERNAME}
+      DB_PASSWORD_FILE: /run/secrets/db_password
+      DB_SERVICE_FILE: /run/secrets/db_service
+      DB_PASS_FILE: /run/secrets/db_pass
+    secrets:
+      - db_password
+      - db_username
+      - db_name
+      - db_service
+      - db_pass
+    ports:
+      - "8000:${PORT}"
+    depends_on:
+      database:
+        condition: service_healthy
+    restart: always
+    volumes:
+      - backend-data:/usr/home/backend
+
+secrets:
+  db_password:
+    file: secrets/db_password.txt
+  db_username:
+    file: secrets/db_username.txt
+  db_name:
+    file: secrets/db_name.txt
+  db_service:
+    file: secrets/services.conf
+  db_pass:
+    file: secrets/db_pass.txt
+
+volumes:
+  db-data:
+    driver: local
+    driver_opts:
+      type: none
+      o: bind
+      device: ./mount/db
+  backend-data:
+    driver: local
+    driver_opts:
+      type: none
+      o: bind
+      device: ./mount/backend
