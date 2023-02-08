@@ -11,12 +11,15 @@ class Topic(models.Model):
 
 
 class Post(models.Model):
-    user = models.ForeignKey(
-        get_user_model(), on_delete=models.SET_NULL, null=True)
+    user = models.ForeignKey(get_user_model(), on_delete=models.SET_NULL, null=True)
+    topic = models.ForeignKey(Topic, on_delete=models.SET_NULL, null=True)
     title = models.CharField(max_length=50)
-    context = models.CharField(max_length=5000)
     created = models.DateTimeField(auto_now_add=True)
     updated = models.DateTimeField(auto_now=True)
+
+    @property
+    def preview(self):
+        return self.content.text[0:100]
 
 
 class Tag(models.Model):
@@ -24,19 +27,18 @@ class Tag(models.Model):
     posts = models.ManyToManyField(Post)
 
 
-class Reply(models.Model):
-    user = models.ForeignKey(
-        get_user_model(), on_delete=models.SET_NULL, null=True)
-    post = models.ForeignKey(Post, on_delete=models.SET_NULL, null=True)
+class Content(models.Model):
+    user = models.ForeignKey(get_user_model(), on_delete=models.SET_NULL, null=True)
+    post = models.OneToOneField(Post, on_delete=models.SET_NULL, null=True)
+    reply = models.ForeignKey(Post, on_delete=models.SET_NULL, null=True, related_name='replies')
+    text = models.CharField(max_length=5000)
     created = models.DateTimeField(auto_now_add=True)
     updated = models.DateTimeField(auto_now=True)
 
 
-class Message(models.Model):
-    user = models.ForeignKey(
-        get_user_model(), on_delete=models.SET_NULL, null=True)
-    post = models.ForeignKey(Post, on_delete=models.SET_NULL, null=True)
-    reply = models.ForeignKey(Reply, on_delete=models.SET_NULL, null=True)
-    context = models.CharField(max_length=50)
+class Comment(models.Model):
+    user = models.ForeignKey(get_user_model(), on_delete=models.SET_NULL, null=True)
+    content = models.ForeignKey(Content, on_delete=models.SET_NULL, null=True)
+    text = models.CharField(max_length=3000, blank=True)
     created = models.DateTimeField(auto_now_add=True)
     updated = models.DateTimeField(auto_now=True)

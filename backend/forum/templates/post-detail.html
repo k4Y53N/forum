@@ -1,0 +1,89 @@
+<html>
+    {% include 'head.html' %}
+    <body>
+        {% include 'nav.html' %}
+            <!-- Page Header-->
+            {% load static %}
+            <header class="masthead" style="background-image: url('{% static 'assets/img/post-bg.jpg' %}')">
+                <div class="container position-relative px-4 px-lg-5">
+                    <div class="row gx-4 gx-lg-5 justify-content-center">
+                        <div class="col-md-10 col-lg-8 col-xl-7">
+                            <div class="post-heading">
+                                <h1>{{ post.title }}</h1>
+                                <h2 class="subheading">{{ post.topic.name }}</h2>
+                                <span class="meta">
+                                    Posted by
+                                    <a href="{% url 'user-detail' post.user.id %}">{{ post.user.username }}</a>
+                                    on {{ post.created | date }}
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </header>
+            <!-- Post Content-->
+            <article class="mb-4">
+                <div class="container px-4 px-lg-5">
+                    <div class="row gx-4 gx-lg-5 justify-content-center">
+                        <div class="col-md-10 col-lg-8 col-xl-7">
+                            
+                            {% load markdownify %}
+                            {{ post.content.text|markdownify }}
+                        </div>
+                        <hr class="my-4" />
+
+                    </div>                    
+                </div>
+                <div class="container px-4 px-lg-5">
+                    <div class="row gx-4 gx-lg-5 justify-content-center">
+                        <div class="col-md-10 col-lg-8 col-xl-7">
+                            {% for comment in post.content.comment_set.all %}
+                                <span>
+                                    <a href="{% url 'user-detail' comment.user.id %}">
+                                        {{ comment.user.username }}
+                                    </a>: {{ comment.text }}                                
+                                </span>
+                            {% endfor %}
+                        </div>
+                    </div>
+                </div>
+            </article>
+
+            {% for reply in replies %}
+                <hr class="my-4" />
+                <article class="mb-4">
+                    <div class="container px-4 px-lg-5">
+                        <div class="row gx-4 gx-lg-5 justify-content-center">
+                            <div class="col-md-10 col-lg-8 col-xl-7">
+                                <span class="meta">
+                                    reply by
+                                    <a href="{% url 'user-detail' post.user.id %}">{{ post.user.username }}</a>
+                                    on {{ post.updated | date }}
+                                </span>
+                                {% load markdownify %}
+                                {{ reply.text|markdownify }}
+                            </div>
+                            <hr class="my-4" />
+                        </div>
+                    </div>
+
+                    <div class="container px-4 px-lg-5">
+                        <div class="row gx-4 gx-lg-5 justify-content-center">
+                            <div class="col-md-10 col-lg-8 col-xl-7">
+                                {% for comment in reply.comment_set.all %}
+                                    <span>
+                                        <a href="{% url 'user-detail' comment.user.id %}">
+                                            {{ comment.user.username }}
+                                        </a>: {{ comment.text }}                                
+                                    </span>
+                                {% endfor %}
+                            </div>
+                        </div>
+                    </div>
+                </article>
+            {% endfor %}
+        {% include 'footer.html' %}
+    </body>
+</html>
+
+

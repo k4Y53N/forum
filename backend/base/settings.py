@@ -13,20 +13,21 @@ https://docs.djangoproject.com/en/4.1/ref/settings/
 import os
 from pathlib import Path
 
+
 def get_env_file_context(env_key: str):
     file_path = os.getenv(env_key)
     with open(file_path, 'r') as f:
         context = f.read().strip()
-    
+
     return context
 
-DB_HOSTNAME = os.getenv('DB_HOSTNAME')
-DB_PORT = os.getenv('DB_PORT')
-DB_NAME = os.getenv('DB_NAME')
-DB_USERNAME = os.getenv('DB_USERNAME')
-DB_PASSWORD = get_env_file_context('DB_PASSWORD_FILE')
-DB_SERVICE_FILE = os.getenv('DB_SERVICE_FILE')
-DB_PASS_FILE = os.getenv('DB_PASS_FILE')
+# DB_HOSTNAME = os.getenv('DB_HOSTNAME')
+# DB_PORT = os.getenv('DB_PORT')
+# DB_NAME = os.getenv('DB_NAME')
+# DB_USERNAME = os.getenv('DB_USERNAME')
+# DB_PASSWORD = get_env_file_context('DB_PASSWORD_FILE')
+# DB_SERVICE_FILE = os.getenv('DB_SERVICE_FILE')
+# DB_PASS_FILE = os.getenv('DB_PASS_FILE')
 
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
@@ -56,10 +57,58 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
 
     'rest_framework',
+    'markdownify',
 
     'forum',
-    'api'
+    'api',
+    'user_auth'
 ]
+
+MARKDOWNIFY = {
+    "default": {
+        "WHITELIST_TAGS": [
+            'a',
+            'abbr',
+            'acronym',
+            'b',
+            'blockquote',
+            'em',
+            'i',
+            'li',
+            'ol',
+            'p',
+            'strong',
+            'ul',
+            'h1',
+            'h2',
+            'h3',
+            'h4',
+            'h5',
+            'h6',
+        ],
+        "WHITELIST_ATTRS": [
+            'href',
+            'src',
+            'alt',
+        ]
+    },
+    "preview": {
+        "WHITELIST_TAGS": [
+            'a',
+            'abbr',
+            'acronym',
+            'b',
+            'blockquote',
+            'em',
+            'i',
+            'li',
+            'ol',
+            'p',
+            'strong',
+            'ul',
+        ],
+    }
+}
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
@@ -97,32 +146,21 @@ WSGI_APPLICATION = 'base.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/4.1/ref/settings/#databases
 
-# DATABASES = {
-#     'default': {
-#         'ENGINE': 'django.db.backends.sqlite3',
-#         'NAME': BASE_DIR / 'db.sqlite3',
-#     }
-# }
-
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.postgresql',
-        'NAME': DB_NAME,
-        'USER': DB_USERNAME,
-        'PASSWORD': DB_PASSWORD,
-        'HOST': DB_HOSTNAME,
-        'PORT': DB_PORT
+        'ENGINE': 'django.db.backends.sqlite3',
+        'NAME': BASE_DIR / 'db.sqlite3',
     }
 }
 
 # DATABASES = {
 #     'default': {
-#         'ENGINE': 'django.db.backends.postgresql',  #PostgreSQL
-#         'NAME': 'djangobackend',  #資料庫名稱
-#         'USER': 'pguser',  #資料庫帳號
-#         'PASSWORD': 'devpassword',  #資料庫密碼
-#         'HOST': '127.0.0.1',  #Server(伺服器)位址
-#         'PORT': '8001'  #PostgreSQL Port號
+#         'ENGINE': 'django.db.backends.postgresql',
+#         'NAME': DB_NAME,
+#         'USER': DB_USERNAME,
+#         'PASSWORD': DB_PASSWORD,
+#         'HOST': DB_HOSTNAME,
+#         'PORT': DB_PORT
 #     }
 # }
 
@@ -169,3 +207,6 @@ STATICFILES_DIRS = [
 # https://docs.djangoproject.com/en/4.1/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+
+AUTH_USER_MODEL = 'user_auth.User'

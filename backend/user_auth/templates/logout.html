@@ -1,0 +1,26 @@
+{% extends 'auth-base.html' %}
+{% load static %}
+{% block main %}
+    <div class="row justify-content-md-center h-100">
+        <div class="card-wrapper">
+            <div class="brand">
+                <img src="{% static 'img/logo.jpg' %}" alt="logo">
+            </div>
+            <div class="card fat">
+                <div class="card-body">
+                    <h4 class="card-title">Logout</h4>
+                    <form method="POST" class="my-login-validation" novalidate="" action="{% url 'logout' %}">
+                        {% csrf_token %}
+                        <div class="form-group m-0">
+                            <button type="submit" class="btn btn-primary btn-block">
+                                Logout
+                            </button>
+                        </div>
+
+                    </form>
+                </div>
+            </div>
+            {% include 'auth-footer.html' %}
+        </div>
+    </div>
+{% endblock main %}
