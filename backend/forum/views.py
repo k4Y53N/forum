@@ -108,6 +108,7 @@ class PostDetail(View):
 
 
 class ReplyList(View):
+    @method_decorator(login_required(redirect_field_name='next', login_url='/login/'))
     def post(self, request, post_id):
         post = get_object_or_404(Post, pk=post_id)
         form = forms.ReplyCreateForm(request.POST)
@@ -122,6 +123,7 @@ class ReplyList(View):
 
 
 class CommentList(View):
+    @method_decorator(login_required(redirect_field_name='next', login_url='/login/'))
     def post(self, request, reply_id):
         content = get_object_or_404(Content, pk=reply_id)
         form = forms.CommentCreateForm(request.POST)

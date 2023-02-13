@@ -1,7 +1,7 @@
 from django.shortcuts import render, redirect
 from django.views import View
 from django.contrib.auth import authenticate, login, logout, get_user_model
-from django.http import HttpResponseBadRequest, HttpResponse
+from django.http import HttpResponseBadRequest, HttpResponse, Http404
 from django.urls import reverse
 from django.contrib.auth.decorators import login_required
 from django.utils.decorators import method_decorator
@@ -92,16 +92,17 @@ class Register(View):
 
 
 class PasswordForget(View):
-    def get(self, request):
-        pass
+    def get(self, request, *args):
+        raise Http404()
 
-    def post(self, request):
-        pass
+    def post(self, request, *args):
+        raise Http404()
+
 
 
 class PasswordReset(View):
-    def get(self, request):
-        pass
+    def get(self, request, *args):
+        raise Http404()
 
-    def post(self, request):
-        pass
+    def post(self, request, *args):
+        raise Http404()

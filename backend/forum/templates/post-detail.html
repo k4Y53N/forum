@@ -33,7 +33,7 @@
                             {% for comment in post.content.comment_set.all %}
                                 <span>
                                     <a href="{% url 'user-detail' comment.user.id %}">
-                                        {{ comment.user.username }}
+                                        @{{ comment.user.username }}
                                     </a>: {{ comment.text }}                                
                                 </span>
                                 <br>
@@ -70,7 +70,7 @@
                                     <br>
                                     <span>
                                         <a href="{% url 'user-detail' comment.user.id %}">
-                                            {{ comment.user.username }}
+                                            @{{ comment.user.username }}
                                         </a>: {{ comment.text }}                                
                                     </span>                                    
                                 {% endfor %}
