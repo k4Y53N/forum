@@ -1,4 +1,5 @@
 from django.contrib.auth.decorators import login_required
+from django.contrib.auth import get_user_model
 from django.http import Http404, HttpResponseBadRequest
 from django.shortcuts import get_object_or_404, redirect, render
 from django.urls import reverse
@@ -22,13 +23,22 @@ class Home(View):
 
 class UserList(View):
     def get(self, request):
-        pass
+        return render(request, 'profile.html')
 
 
 class UserDetail(View):
-    def get(self, request):
-        pass
+    def get(self, request, user_id):
+        user = get_object_or_404(get_user_model(), pk=user_id)
+        posts = Post.objects.filter(user=user, content__isnull=False)
+        replies = Content.objects.filter(user=user, reply__isnull=True)
+        comments = Comment.objects.filter(user=user)
+        context = {
+            'posts': posts,
+            'replies': replies,
+            'comments': comments
+        }
 
+        return render(request, 'profile.html', context)
 
 class TopicList(View):
     def get(self, request):

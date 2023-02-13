@@ -1,0 +1,11 @@
+{% extends 'base.html' %}
+{% block main %}
+
+<h1>username: {{ user.username }}</h1>
+<h2>email: {{ user.email }}</h2>
+
+<h3>{{ posts.count }} posts</h3>
+<h3>{{ replies.count }} replies</h3>
+<h3>{{ comments.count }} comments</h3>
+
+{% endblock main %}
