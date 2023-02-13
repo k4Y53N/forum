@@ -5,7 +5,7 @@ from django.contrib.auth import get_user_model
 
 
 class Topic(models.Model):
-    name = models.CharField(max_length=50)
+    name = models.CharField(max_length=50, unique=True)
     created = models.DateTimeField(auto_now_add=True)
     updated = models.DateTimeField(auto_now=True)
 
@@ -34,6 +34,9 @@ class Content(models.Model):
     text = models.CharField(max_length=5000)
     created = models.DateTimeField(auto_now_add=True)
     updated = models.DateTimeField(auto_now=True)
+
+    def is_context(self):
+        return self.post != None
 
 
 class Comment(models.Model):

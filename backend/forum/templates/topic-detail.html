@@ -5,7 +5,7 @@
             <div class="col-md-10 col-lg-8 col-xl-7">
                 {% for post in posts %}
                     <div class="post-preview">
-                        <a href="{% url 'post-detail' post.topic.id post.id %}">
+                        <a href="{% url 'post-detail' post.id %}">
                             <h2 class="post-title">{{ post.title }}</h2>
                             <h3 class="post-subtitle">{{ post.preview }}</h3>
                         </a>

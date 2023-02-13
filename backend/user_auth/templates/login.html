@@ -11,6 +11,9 @@
 					<h4 class="card-title">Login</h4>
 					<form method="POST" class="my-login-validation" novalidate="" action="{% url 'login' %}">
 						{% csrf_token %}
+						{% if next %}
+							<input type="hidden" class="form-control" name="{{ redirect_field_name }}" value="{{ next }}">
+						{% endif %}
 						<div class="form-group">
 							<label for="email">E-Mail Address</label>
 							<input id="email" type="email" class="form-control" name="email" value="" required autofocus>

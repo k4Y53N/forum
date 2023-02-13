@@ -20,6 +20,19 @@
                     <hr class="my-4" />
                     <!-- Post preview-->
                 {% endfor %}
+                
+                {% if request.user.is_authenticated %}
+                    <form action="{% url 'topic-list' %}" method="post">
+                        {% csrf_token %}
+                        <label for="">Create new topic</label>
+                        <input type="text" name="name" value="" placeholder="Enter new topic name">
+                        <input type="submit" value="create">
+                    </form>
+                {% else %}
+                    <p><a href="{% url 'login' %}?next={{ request.path }}">Login to Create new topic</a></p>
+                {% endif %}
+                
+
             </div>
         </div>
     </div>

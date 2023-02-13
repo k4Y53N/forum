@@ -10,7 +10,7 @@
                         <div class="col-md-10 col-lg-8 col-xl-7">
                             <div class="post-heading">
                                 <h1>{{ post.title }}</h1>
-                                <h2 class="subheading">{{ post.topic.name }}</h2>
+                                <h2 class="subheading"><a href="{% url 'topic-detail' post.topic.id %}">{{ post.topic.name }}<a/></h2>
                                 <span class="meta">
                                     Posted by
                                     <a href="{% url 'user-detail' post.user.id %}">{{ post.user.username }}</a>
@@ -29,23 +29,26 @@
                             
                             {% load markdownify %}
                             {{ post.content.text|markdownify }}
-                        </div>
-                        <hr class="my-4" />
-
-                    </div>                    
-                </div>
-                <div class="container px-4 px-lg-5">
-                    <div class="row gx-4 gx-lg-5 justify-content-center">
-                        <div class="col-md-10 col-lg-8 col-xl-7">
+                            <hr class="my-4" />
                             {% for comment in post.content.comment_set.all %}
                                 <span>
                                     <a href="{% url 'user-detail' comment.user.id %}">
                                         {{ comment.user.username }}
                                     </a>: {{ comment.text }}                                
                                 </span>
+                                <br>
                             {% endfor %}
-                        </div>
-                    </div>
+                            {% if request.user.is_authenticated %}
+                                <form action="{% url 'comment-list' post.content.id %}" method="post">
+                                    {% csrf_token %}
+                                    <input type="text" name="text" placeholder="leave comment">
+                                    <input type="submit" value="add comment">
+                                </form>
+                            {% else %}
+                                <p><a href="{% url 'login' %}?next={{ request.path }}">Login to add comment</a></p>
+                            {% endif %}
+                        </div>                        
+                    </div>                    
                 </div>
             </article>
 
@@ -57,31 +60,50 @@
                             <div class="col-md-10 col-lg-8 col-xl-7">
                                 <span class="meta">
                                     reply by
-                                    <a href="{% url 'user-detail' post.user.id %}">{{ post.user.username }}</a>
-                                    on {{ post.updated | date }}
+                                    <a href="{% url 'user-detail' reply.user.id %}">{{ reply.user.username }}</a>
+                                    on {{ reply.updated | date }}
                                 </span>
-                                {% load markdownify %}
                                 {{ reply.text|markdownify }}
-                            </div>
-                            <hr class="my-4" />
-                        </div>
-                    </div>
+                                <hr class="my-4" />
 
-                    <div class="container px-4 px-lg-5">
-                        <div class="row gx-4 gx-lg-5 justify-content-center">
-                            <div class="col-md-10 col-lg-8 col-xl-7">
                                 {% for comment in reply.comment_set.all %}
+                                    <br>
                                     <span>
                                         <a href="{% url 'user-detail' comment.user.id %}">
                                             {{ comment.user.username }}
                                         </a>: {{ comment.text }}                                
-                                    </span>
+                                    </span>                                    
                                 {% endfor %}
+                                {% if request.user.is_authenticated %}
+                                    <form action="{% url 'comment-list' reply.id %}" method="post">
+                                        {% csrf_token %}
+                                        <input type="text" name="text" placeholder="leave comment">
+                                        <input type="submit" value="add comment">
+                                    </form>
+                                {% else %}
+                                    <p><a href="{% url 'login' %}?next={{ request.path }}">Login to add comment</a></p>
+                                {% endif %}
                             </div>
                         </div>
                     </div>
                 </article>
             {% endfor %}
+            <hr class="my-4" />
+            <div class="container px-4 px-lg-5">
+                <div class="row gx-4 gx-lg-5 justify-content-center">
+                    <div class="col-md-10 col-lg-8 col-xl-7">
+                        <form action="{% url 'reply-list' post.id %}" method="post">
+                            {% csrf_token %}
+                            <label>add new reply</label>
+                            <br>
+                            <textarea name="text" id="" cols="50" rows="5">
+                            </textarea>
+                            <br>
+                            <input type="submit" value="submit">
+                        </form>
+                    </div>
+                </div>
+            </div>
         {% include 'footer.html' %}
     </body>
 </html>

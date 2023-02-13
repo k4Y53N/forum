@@ -5,20 +5,36 @@
             <div class="col-md-10 col-lg-8 col-xl-7">
                 {% for post in posts %}
                     <div class="post-preview">
-                        <a href="{% url 'post-detail' post.topic.id post.id %}">
+                        <a href="{% url 'post-detail' post.id %}">
                             <h2 class="post-title">{{ post.title }}</h2>
                             {% load markdownify %}
                             <h3 class="post-subtitle">{{ post.preview|markdownify:'preview' }}</h3>
                         </a>
                         <p class="post-meta">
                             Posted by
-                            <a href="{% url 'user-detail' user.id %}">{{ user.username }}</a>
+                            <a href="{% url 'user-detail' post.user.id %}">{{ post.user.username }}</a>
                             on {{ post.created | date }}
                         </p>
                     </div>
                     <!-- Divider-->
                     <hr class="my-4" />
                 {% endfor %}
+
+                {% if request.user.is_authenticated %}
+                    <form action="{% url 'post-list' topic.id %}" method="post">
+                        {% csrf_token %}
+                        <p>Create new post</p>
+                        <p >Title:</p>
+                        <input type="text" name="title" placeholder="Enter your text">
+                        <p >Context:</p>
+                        <textarea name="context" rows="10" cols="50" placeholder="Context...">
+                        </textarea>
+                        <input type="submit" value="submit">
+                    </form>
+                {% else %}
+                    <p><a href="{% url 'login'%}?next={{ request.path }}">Login to Create new post</a></p>
+                {% endif %}
+
             </div>
         </div>
     </div>
