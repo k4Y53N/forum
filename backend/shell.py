@@ -7,16 +7,5 @@ from django.contrib.auth import get_user_model
 
 # exec(open('shell.py', 'r').read())
 
-user = get_user_model().objects.first()
-Topic.objects.all().delete()
-Post.objects.all().delete()
-Content.objects.all().delete()
-Comment.objects.all().delete()
-topic = Topic.objects.create(name='python')
-post = Post.objects.create(topic=topic, user=user)
-content = Content.objects.create(user=user, post=post, text=f'{post.id}\'s context')
-reply = Content.objects.create(reply=post, user=user, text=f'{post.id}\'s reply')
-
-for content in Content.objects.all():
-    comment = Comment(content=content, text=f'{content.id}\'s comment', user=user)
-    comment.save()
+from django.core.management.utils import get_random_secret_key
+print(get_random_secret_key())

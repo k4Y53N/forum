@@ -21,13 +21,7 @@ def get_env_file_context(env_key: str):
 
     return context
 
-# DB_HOSTNAME = os.getenv('DB_HOSTNAME')
-# DB_PORT = os.getenv('DB_PORT')
-# DB_NAME = os.getenv('DB_NAME')
-# DB_USERNAME = os.getenv('DB_USERNAME')
-# DB_PASSWORD = get_env_file_context('DB_PASSWORD_FILE')
-# DB_SERVICE_FILE = os.getenv('DB_SERVICE_FILE')
-# DB_PASS_FILE = os.getenv('DB_PASS_FILE')
+SECRET_KEY = get_env_file_context('SECRET_KEY_FILE')
 
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
@@ -38,7 +32,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/4.1/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-m1q80vv)vdjhg4^t0&biq2ahacw(bw8@tvf@$$4ts76o@wk47='
+# SECRET_KEY = 'django-insecure-m1q80vv)vdjhg4^t0&biq2ahacw(bw8@tvf@$$4ts76o@wk47='
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
@@ -146,23 +140,30 @@ WSGI_APPLICATION = 'base.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/4.1/ref/settings/#databases
 
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
-    }
-}
-
 # DATABASES = {
 #     'default': {
-#         'ENGINE': 'django.db.backends.postgresql',
-#         'NAME': DB_NAME,
-#         'USER': DB_USERNAME,
-#         'PASSWORD': DB_PASSWORD,
-#         'HOST': DB_HOSTNAME,
-#         'PORT': DB_PORT
+#         'ENGINE': 'django.db.backends.sqlite3',
+#         'NAME': BASE_DIR / 'db.sqlite3',
 #     }
 # }
+
+DB_HOSTNAME = os.getenv('DB_HOSTNAME')
+DB_PORT = os.getenv('DB_PORT')
+DB_NAME = get_env_file_context('DB_NAME_FILE')
+DB_USERNAME = get_env_file_context('DB_USERNAME_FILE')
+DB_PASSWORD = get_env_file_context('DB_PASSWORD_FILE')
+
+
+DATABASES = {
+    'default': {
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': DB_NAME,
+        'USER': DB_USERNAME,
+        'PASSWORD': DB_PASSWORD,
+        'HOST': DB_HOSTNAME,
+        'PORT': DB_PORT
+    }
+}
 
 
 # Password validation
