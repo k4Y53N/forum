@@ -19,4 +19,4 @@ echo "<your django secret key>" > secrets/secret_key.txt
 ```
 docker-compose up -d
 ```
-url is ![127.0.0.1:8000](127.0.0.1:8000)
+url is [127.0.0.1:8000](127.0.0.1:8000)
