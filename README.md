@@ -25,3 +25,7 @@ url is [127.0.0.1:8000](127.0.0.1:8000)
 ### ref
 [https://github.com/nauvalazhar/bootstrap-4-login-page](https://github.com/nauvalazhar/bootstrap-4-login-page)  
 [https://github.com/StartBootstrap/startbootstrap-clean-blog](https://github.com/StartBootstrap/startbootstrap-clean-blog)
+
+
+### swagger api
+[127.0.0.1:8000/swagger/](127.0.0.1:8000/swagger/)

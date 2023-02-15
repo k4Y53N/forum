@@ -2,3 +2,6 @@ psycopg2
 django==4.1
 djangorestframework
 django-markdownify
+django-filter
+coreapi
+drf-yasg

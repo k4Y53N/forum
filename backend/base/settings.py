@@ -21,7 +21,7 @@ def get_env_file_context(env_key: str):
 
     return context
 
-SECRET_KEY = get_env_file_context('SECRET_KEY_FILE')
+
 
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
@@ -32,13 +32,18 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/4.1/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
+SECRET_KEY = get_env_file_context('SECRET_KEY_FILE')
 # SECRET_KEY = 'django-insecure-m1q80vv)vdjhg4^t0&biq2ahacw(bw8@tvf@$$4ts76o@wk47='
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
 ALLOWED_HOSTS = []
+LOGIN_URL = '/login/'
 
+SWAGGER_SETTINGS = {
+    'LOGOUT_URL': '/logout/'
+}
 
 # Application definition
 
@@ -51,12 +56,21 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
 
     'rest_framework',
+    'django_filters',
+    'coreapi',
+    'drf_yasg',
     'markdownify',
 
     'forum',
     'api',
     'user_auth'
 ]
+
+
+REST_FRAMEWORK = {
+    'DEFAULT_FILTER_BACKENDS': ['django_filters.rest_framework.DjangoFilterBackend'],
+}
+
 
 MARKDOWNIFY = {
     "default": {
