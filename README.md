@@ -5,6 +5,12 @@ git clone https://github.com/k4Y53N/forum.git
 cd forum
 ```
 
+### dev version
+```
+git clone https://github.com/k4Y53N/forum.git --branch dev
+cd forum
+```
+
 ### Setup
 ```
 mkdir mount/db
@@ -15,9 +21,25 @@ echo "<your database username>" > secrets/db_username.txt
 echo "<your django secret key>" > secrets/secret_key.txt
 ```
 
+### Setup (dev version (windows))
+```
+python -m venv .venv
+.venv/scripts/activate
+pip install -r requirements.txt
+```
+
 ### Strat Up
 ```
 docker-compose up -d
+```
+
+### Start Up (dev version (windows))
+```
+# start your venv first
+cd backend
+python manage.py makemigtaions
+python manage.py migrate --run-sync
+python manage.py runserver
 ```
 url is [127.0.0.1:8000](127.0.0.1:8000)
 
