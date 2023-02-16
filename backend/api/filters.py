@@ -5,3 +5,7 @@ from forum.models import Topic
 
 class TopicFilter(FilterSet):
     name = CharFilter(lookup_expr='icontains')
+
+
+class PostFilter(FilterSet):
+    title = CharFilter(lookup_expr='icontains')

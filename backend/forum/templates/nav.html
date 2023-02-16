@@ -10,6 +10,7 @@
                 <li class="nav-item"><a class="nav-link px-lg-3 py-3 py-lg-4" href="{% url 'home' %}">Home</a></li>
                 <li class="nav-item"><a class="nav-link px-lg-3 py-3 py-lg-4" href="{% url 'topic-list' %}">Topics</a></li>
                 <li class="nav-item"><a class="nav-link px-lg-3 py-3 py-lg-4" href="https://github.com/k4Y53N/forum">Github</a></li>
+                <li class="nav-item"><a class="nav-link px-lg-3 py-3 py-lg-4" href="{% url 'schema-swagger-ui' %}">Swagger</a></li>
                 {% if request.user.is_authenticated %}
                     <li class="nav-item"><a class="nav-link px-lg-3 py-3 py-lg-4" href="{% url 'user-detail' request.user.id %}">Profile</a></li>
                     <li class="nav-item"><a class="nav-link px-lg-3 py-3 py-lg-4" href="{% url 'logout' %}?next={{ request.path }}">Logout</a></li>
