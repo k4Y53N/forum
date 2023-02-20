@@ -33,6 +33,7 @@ class UserDetail(View):
         replies = Content.objects.filter(user=user, reply__isnull=True)
         comments = Comment.objects.filter(user=user)
         context = {
+            'user': user,
             'posts': posts,
             'replies': replies,
             'comments': comments
