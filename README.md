@@ -51,3 +51,12 @@ url is [127.0.0.1:8000](127.0.0.1:8000)
 
 ### swagger api
 [127.0.0.1:8000/swagger/](127.0.0.1:8000/swagger/)
+
+
+### preview
+![](docs/home.png)
+![](docs/posts.png)
+![](docs/post.png)
+![](docs/profile.png)
+![](docs/login.png)
+![](docs/swagger.png)
