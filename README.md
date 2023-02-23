@@ -37,6 +37,7 @@ docker-compose up -d
 ```
 # start your venv first
 cd backend
+python manage.py collectstatic --noinput
 python manage.py makemigtaions
 python manage.py migrate --run-sync
 python manage.py runserver
