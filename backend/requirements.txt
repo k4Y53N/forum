@@ -5,3 +5,4 @@ django-markdownify
 django-filter
 coreapi
 drf-yasg
+gunicorn
