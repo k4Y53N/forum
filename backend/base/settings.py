@@ -36,9 +36,9 @@ SECRET_KEY = get_env_file_context('SECRET_KEY_FILE')
 # SECRET_KEY = 'django-insecure-m1q80vv)vdjhg4^t0&biq2ahacw(bw8@tvf@$$4ts76o@wk47='
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['backend']
 LOGIN_URL = '/login/'
 
 SWAGGER_SETTINGS = {

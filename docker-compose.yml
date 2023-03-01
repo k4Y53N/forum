@@ -7,10 +7,10 @@ services:
       POSTGRES_PASSWORD_FILE: /run/secrets/db_password
       POSTGRES_USER_FILE: /run/secrets/db_username
       POSTGRES_DB_FILE: /run/secrets/db_name
-      PGDATA: //var/lib/postgresql/data
+      PGDATA: /var/lib/postgresql/data
       POSTGRES_HOST_AUTH_METHOD: trust
     ports:
-      - "${DB_PORT}"
+      - "${DB_PORT}:5432"
     secrets:
       - db_password
       - db_username
@@ -25,10 +25,9 @@ services:
     volumes:
       - db-data:/var/lib/postgresql/data
   backend:
-    build: backend
+    build: ./backend
     environment:
       SECRET_KEY_FILE: /run/secrets/secret_key
-      PORT: ${PORT}
       DB_HOSTNAME: database
       DB_PORT: ${DB_PORT}
       DB_NAME_FILE: /run/secrets/db_name
@@ -39,14 +38,22 @@ services:
       - db_password
       - db_username
       - db_name
-    ports:
-      - "8000:${PORT}"
     depends_on:
       database:
         condition: service_healthy
     restart: always
     volumes:
       - backend-data:/usr/home/backend
+    expose:
+      - 8000
+  nginx:
+    build: ./nginx
+    volumes:
+      - backend-data:/backend
+    ports:
+      - "80:80"
+    depends_on:
+      - backend
 
 secrets:
   secret_key:
