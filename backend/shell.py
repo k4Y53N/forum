@@ -120,9 +120,9 @@ def create_comment():
 
 
 
-# delete_all()
-# create_user()
-# create_topic()
-# create_post()
-# create_reply()
+delete_all()
+create_user()
+create_topic()
+create_post()
+create_reply()
 create_comment()
