@@ -16,6 +16,9 @@ from pathlib import Path
 
 def get_env_file_context(env_key: str):
     file_path = os.getenv(env_key)
+    if file_path is None:
+        return
+
     with open(file_path, 'r') as f:
         context = f.read().strip()
 
