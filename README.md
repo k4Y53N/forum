@@ -1,3 +1,12 @@
+### preview
+![](docs/arch.jpg)
+![](docs/home.png)
+![](docs/posts.png)
+![](docs/post.png)
+![](docs/profile.png)
+![](docs/login.png)
+![](docs/swagger.png)
+
 ### Install
 
 ```
@@ -5,11 +14,7 @@ git clone https://github.com/k4Y53N/forum.git
 cd forum
 ```
 
-### dev version
-```
-git clone https://github.com/k4Y53N/forum.git --branch dev
-cd forum
-```
+
 
 ### Setup
 ```
@@ -21,29 +26,11 @@ echo "<your database username>" > secrets/db_username.txt
 echo "<your django secret key>" > secrets/secret_key.txt
 ```
 
-### Setup (dev version (windows))
-```
-python -m venv .venv
-.venv/scripts/activate
-pip install -r requirements.txt
-```
 
 ### Strat Up
 ```
 docker-compose up -d
 ```
-
-### Start Up (dev version (windows))
-```
-# start your venv first
-cd backend
-python manage.py collectstatic --noinput
-python manage.py makemigtaions
-python manage.py migrate --run-sync
-python manage.py runserver
-```
-url is [127.0.0.1:8000](127.0.0.1:8000)
-
 
 ### ref
 [https://github.com/nauvalazhar/bootstrap-4-login-page](https://github.com/nauvalazhar/bootstrap-4-login-page)  
@@ -51,13 +38,4 @@ url is [127.0.0.1:8000](127.0.0.1:8000)
 
 
 ### swagger api
-[127.0.0.1:8000/swagger/](127.0.0.1:8000/swagger/)
-
-
-### preview
-![](docs/home.png)
-![](docs/posts.png)
-![](docs/post.png)
-![](docs/profile.png)
-![](docs/login.png)
-![](docs/swagger.png)
+[127.0.0.1/swagger/](127.0.0.1/swagger/)
