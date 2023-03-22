@@ -92,15 +92,19 @@
             <div class="container px-4 px-lg-5">
                 <div class="row gx-4 gx-lg-5 justify-content-center">
                     <div class="col-md-10 col-lg-8 col-xl-7">
-                        <form action="{% url 'reply-list' post.id %}" method="post">
-                            {% csrf_token %}
-                            <label>add new reply</label>
-                            <br>
-                            <textarea name="text" id="" cols="50" rows="5">
-                            </textarea>
-                            <br>
-                            <input type="submit" value="submit">
-                        </form>
+                        {% if request.user.is_authenticated %}
+                            <form action="{% url 'reply-list' post.id %}" method="post">
+                                {% csrf_token %}
+                                <label>add new reply</label>
+                                <br>
+                                <textarea name="text" id="" cols="50" rows="5">
+                                </textarea>
+                                <br>
+                                <input type="submit" value="submit">
+                            </form>
+                        {% else %}
+                            <p><a href="{% url 'login' %}?next={{ request.path }}">Login to add new reply</a></p>
+                        {% endif %}
                     </div>
                 </div>
             </div>

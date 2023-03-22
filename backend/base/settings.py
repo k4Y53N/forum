@@ -41,7 +41,7 @@ SECRET_KEY = get_env_file_context('SECRET_KEY_FILE')
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = False
 
-ALLOWED_HOSTS = ['backend']
+ALLOWED_HOSTS = ['*']
 LOGIN_URL = '/login/'
 
 SWAGGER_SETTINGS = {
