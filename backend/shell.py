@@ -33,8 +33,8 @@ def delete_all():
 
 
 def create_user():
-    user = get_user_model().objects.create_user(
-        username='admin', email='admin@email.com', is_superuser=True, password='dev1234')
+    user = get_user_model().objects.create_superuser(
+        username='admin', email='admin@email.com', password='dev1234')
     with open('random_user.json', 'r') as f:
         users = json.load(f)
 
