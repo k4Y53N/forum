@@ -73,8 +73,3 @@ volumes:
       o: bind
       device: ./mount/db
   backend-data:
-    driver: local
-    driver_opts:
-      type: none
-      o: bind
-      device: ./mount/backend
